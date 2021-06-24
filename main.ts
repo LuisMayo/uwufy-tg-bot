@@ -3,7 +3,7 @@ import {
   UpdateType,
 } from "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts";
 import Uwuifier from "https://deno.land/x/uwuifier@v4.0.1/src/index.ts";
-import { TgUtils } from "file:C:/Users/luism/Documents/GitHub/deno-telegram-bot-api-utils/tg-bot-utils.ts";
+import { TgUtils } from "https://deno.land/x/telegram_bot_api_utils@v0.1.0/tg-bot-utils.ts";
 
 // Create a "Uwuifier" instance
 const uwuifier = new Uwuifier();
@@ -29,6 +29,15 @@ utils.onCommand("about", async (command) => {
     text: 'Made with ❤️ by @TLuigi003.\nSource code in https://github.com/LuisMayo/ace-attorney-telegram-bot\n\nDo you like my work? You could thank me by buying me a [ko-fi](https://ko-fi.com/luismayo)',
     parse_mode: 'Markdown'
   });
+});
+
+bot.on(UpdateType.Message, async ({message}) => {
+  if (!message.text?.trimStart().startsWith('/') && (message.chat.type === 'private' || Math.random() > 0.9)) {
+    await bot.sendMessage({
+      chat_id: message.chat.id,
+      text: uwuifier.uwuifySentence(message.text!)
+    })
+  }
 });
 
 bot.on(UpdateType.InlineQuery, async (query) => {
