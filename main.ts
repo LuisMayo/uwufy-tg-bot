@@ -50,7 +50,7 @@ bot.on(UpdateType.Message, async ({ message }) => {
   const text = message.text?.trimStart();
   if (
     text != null && text.length > 0 && !text?.startsWith("/") &&
-    (message.chat.type === "private" || Math.random() > 0.95)
+    (message.chat.type === "private" || Math.random() >= 0.98)
   ) {
     try {
       await bot.sendMessage({
