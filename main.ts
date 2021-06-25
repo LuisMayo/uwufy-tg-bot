@@ -17,41 +17,68 @@ utils.onCommand("uwufy", async (command) => {
   const message = command.original.message;
   const text = message.reply_to_message?.text || command.parsed_text ||
     "I can't hear you";
-  await command.reply(uwuifier.uwuifySentence(text));
+  try {
+    await command.reply(uwuifier.uwuifySentence(text));
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 utils.onCommand("start", async (command) => {
-  await command.reply('I can convert messages into uwu messages. Just reply to a message using /uwufy or use me in inline mode typing @uwufyer_bot');
+  try {
+    await command.reply(
+      "I can convert messages into uwu messages. Just reply to a message using /uwufy or use me in inline mode typing @uwufyer_bot",
+    );
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 utils.onCommand("about", async (command) => {
-  await command.reply({
-    text: 'Made with ❤️ by @TLuigi003.\nSource code in https://github.com/LuisMayo/ace-attorney-telegram-bot\n\nDo you like my work? You could thank me by buying me a [ko-fi](https://ko-fi.com/luismayo)',
-    parse_mode: 'Markdown'
-  });
+  try {
+    await command.reply({
+      text:
+        "Made with ❤️ by @TLuigi003.\nSource code in https://github.com/LuisMayo/ace-attorney-telegram-bot\n\nDo you like my work? You could thank me by buying me a [ko-fi](https://ko-fi.com/luismayo)",
+      parse_mode: "Markdown",
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-bot.on(UpdateType.Message, async ({message}) => {
-  if (!message.text?.trimStart().startsWith('/') && (message.chat.type === 'private' || Math.random() > 0.9)) {
-    await bot.sendMessage({
-      chat_id: message.chat.id,
-      text: uwuifier.uwuifySentence(message.text!)
-    })
+bot.on(UpdateType.Message, async ({ message }) => {
+  const text = message.text?.trimStart();
+  if (
+    text != null && text.length > 0 && !text?.startsWith("/") &&
+    (message.chat.type === "private" || Math.random() > 0)
+  ) {
+    try {
+      await bot.sendMessage({
+        chat_id: message.chat.id,
+        text: uwuifier.uwuifySentence(message.text!),
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 });
 
 bot.on(UpdateType.InlineQuery, async (query) => {
   const send = uwuifier.uwuifySentence(query.inline_query.query);
   if (send && send.length > 0) {
-    await bot.answerInlineQuery({
-      inline_query_id: query.inline_query.id,
-      results: [{
-        type: "article",
-        id: "1",
-        title: send,
-        input_message_content: { message_text: send },
-      }],
-    });
+    try {
+      await bot.answerInlineQuery({
+        inline_query_id: query.inline_query.id,
+        results: [{
+          type: "article",
+          id: "1",
+          title: send,
+          input_message_content: { message_text: send },
+        }],
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 });
 
