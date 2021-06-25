@@ -3,7 +3,7 @@ import {
   UpdateType,
 } from "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts";
 import Uwuifier from "https://deno.land/x/uwuifier@v4.0.1/src/index.ts";
-import { TgUtils } from "https://deno.land/x/telegram_bot_api_utils@v0.1.0/tg-bot-utils.ts";
+import { TgUtils } from "https://deno.land/x/telegram_bot_api_utils@v0.1.1/tg-bot-utils.ts";
 
 // Create a "Uwuifier" instance
 const uwuifier = new Uwuifier();
